@@ -18,5 +18,13 @@
     <ClCompile Include="challenge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AVRCPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AVRCPU.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

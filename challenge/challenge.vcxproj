@@ -139,7 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AVRCPU.cpp" />
     <ClCompile Include="challenge.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AVRCPU.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
