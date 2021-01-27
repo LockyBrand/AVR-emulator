@@ -7,10 +7,10 @@ int main()
     CPU::CPUFlash flash;
     CPU::AVRCPU avrcpu;
 
-    avrcpu.setProgram(flash, "Source Files/assemblyPrograms/program1.assembly");
+    avrcpu.setProgram(flash, "Source Files/assemblyPrograms/programTest.emulatedAssembly");
 
     while (!avrcpu.shutDownCPU) {
-        avrcpu.executeCPUInstruction();
+        avrcpu.runCPUProgram();
     }
 
     return 0;

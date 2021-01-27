@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "instructionKeyWords.h"
 
 namespace CPU {
 	using Byte = unsigned char;
@@ -10,12 +11,8 @@ namespace CPU {
 		CPUFlash();
 		~CPUFlash();
 	protected:
-		static Word PROGMEM[256000];
+		static Word PROGMEM[128000];
 		Word& operator[] (const Word& i_addr); // addressed by 16-bit words for the purpose of getting CPU instructions
-
-		// instruction list
-		Word NOP = 0x0000;
-		Word SLEEP = 0x9588;
 	};
 
 	class CPUREG {
@@ -33,9 +30,9 @@ namespace CPU {
 		AVRCPU();
 		~AVRCPU();
 
+		void runCPUProgram();
 		void executeCPUInstruction(const Word& i_memAddr);
 		void setProgram(const CPUFlash& i_PROGMEM, const std::string& filePath);
-		bool CPUIsRunning();
 
 		bool shutDownCPU;
 	private:

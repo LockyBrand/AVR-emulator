@@ -29,10 +29,11 @@
     <ClInclude Include="AVRCPU.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="program1.assembly">
+    <ClInclude Include="instructionKeyWords.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="emulatedAssembly.h">
       <Filter>Source Files\assemblyPrograms</Filter>
-    </None>
+    </ClInclude>
   </ItemGroup>
 </Project>

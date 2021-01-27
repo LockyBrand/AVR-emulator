@@ -1,0 +1,3 @@
+﻿  AVRCPU.cpp
+AVRCPU.obj : error LNK2001: unresolved external symbol "protected: static unsigned short * CPU::CPUFlash::PROGMEM" (?PROGMEM@CPUFlash@CPU@@1PAGA)
+E:\GitRespositories\AVR-emulator\x64\Debug\challenge.exe : fatal error LNK1120: 1 unresolved externals
