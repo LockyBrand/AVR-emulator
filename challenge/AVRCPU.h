@@ -1,40 +1,45 @@
 #pragma once
-#include <unordered_map>
 
 namespace CPU {
 	using Byte = unsigned char;
-	using Byte16 = unsigned short;
+	using Word = unsigned short;
 
-	struct instructions {
-		Byte16 NOP = 0x0;
-		
-	};
+	class CPUFlash {
+		CPUFlash();
+		~CPUFlash();
 
-	struct CPUFlash {
+		//instruction list
+		const Word NOP = 0x0;
+
+	private:
 		Byte PROGMEM[256000];
+		Byte operator[] (const Word& i_addr); // addressed by 16-bit words for the purpose of getting CPU instructions
+		//Byte operator[] (const Word& i_addr, const ); // addressed by 16-bit words for the purpose of setting CPU instructions
 	};
 
-	struct CPUREG {
-		Byte REG[32];
+	class CPUREG {
+	private:
+		Byte GPREG[32];
 	};
 
-	struct CPUDATASRAM {
+	class CPUDATASRAM {
+	private:
 		Byte SRAM[8192];
-
-		Byte operator[] (const Byte16& addr); 
 	};
 
-	class AVRCPU {
+	class AVRCPU : private CPUFlash, private CPUREG, private CPUDATASRAM {
 	public:
-		AVRCPU(CPUFlash& i_flashMem, CPUREG& i_RAM);
+		AVRCPU();
 		~AVRCPU();
 
-		void executeCPUInstruction(const instructions& i_instruction);
+		void executeCPUInstruction();
+		void setProgram(const CPUFlash& i_PROGMEM);
+		bool CPUIsRunning();
 	private:
 		CPUFlash& m_flash; //program memory
 		CPUREG& m_REG; //SRAM of CPU
 
-		// status register - SREG
+		// status bits - SREG
 		Byte C : 1; // Carry Flag
 		Byte Z : 1; // Zero Flag
 		Byte N : 1; // Negative Flag
@@ -44,6 +49,14 @@ namespace CPU {
 		Byte T : 1; // Transfer bit used by BLD and BST instructions
 		Byte I : 1; // Global Interrupt Enable/Disable Flag
 
+		Word PC; // program counter
+		Word SP; // stack pointer
 
+		// segment registers to prepend and address 16 bit and 24 bit addresses
+		Byte RAMPX;
+		Byte RAMPY;
+		Byte RAMPZ;
+		Byte RAMPD;
+		Byte EIND;
 	};
 }
