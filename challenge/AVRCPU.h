@@ -1,29 +1,30 @@
 #pragma once
+#include <string>
 
 namespace CPU {
 	using Byte = unsigned char;
 	using Word = unsigned short;
 
 	class CPUFlash {
+	public:
 		CPUFlash();
 		~CPUFlash();
+	protected:
+		static Word PROGMEM[256000];
+		Word& operator[] (const Word& i_addr); // addressed by 16-bit words for the purpose of getting CPU instructions
 
-		//instruction list
-		const Word NOP = 0x0;
-
-	private:
-		Byte PROGMEM[256000];
-		Byte operator[] (const Word& i_addr); // addressed by 16-bit words for the purpose of getting CPU instructions
-		//Byte operator[] (const Word& i_addr, const ); // addressed by 16-bit words for the purpose of setting CPU instructions
+		// instruction list
+		Word NOP = 0x0000;
+		Word SLEEP = 0x9588;
 	};
 
 	class CPUREG {
-	private:
+	protected:
 		Byte GPREG[32];
 	};
 
 	class CPUDATASRAM {
-	private:
+	protected:
 		Byte SRAM[8192];
 	};
 
@@ -32,12 +33,12 @@ namespace CPU {
 		AVRCPU();
 		~AVRCPU();
 
-		void executeCPUInstruction();
-		void setProgram(const CPUFlash& i_PROGMEM);
+		void executeCPUInstruction(const Word& i_memAddr);
+		void setProgram(const CPUFlash& i_PROGMEM, const std::string& filePath);
 		bool CPUIsRunning();
+
+		bool shutDownCPU;
 	private:
-		CPUFlash& m_flash; //program memory
-		CPUREG& m_REG; //SRAM of CPU
 
 		// status bits - SREG
 		Byte C : 1; // Carry Flag
